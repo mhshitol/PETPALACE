@@ -1,0 +1,121 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>TouristNest</title>
+    <link rel="stylesheet" th:href="@{/css/signup.css}" />
+    <script src="https://kit.fontawesome.com/e06ed31c2b.js" crossorigin="anonymous"></script>
+</head>
+<body>
+<div class="bg-color">
+    <div class="nav-color">
+        <h2 class="logo">PET PALACE</h2>
+        <div class="header">
+            <nav>
+                <ul class="nav-links">
+                    <li><a href="#"></a></li>
+                    <li><a href="http://localhost:8080/petpalace">Home</a></li>
+                    <li><a href="http://localhost:8080/petpalace">Cat</a></li>
+                    <li><a href="http://localhost:8080/cat">Dog</a></li>
+                    <li><a href="#">Other Animal</a></li>
+                    <!-- Modified this line -->
+                    <li><a href="#">Shelter and Rescue</a></li>
+                    <li><a href="#"></a></li>
+                    <li><a href="#"></a></li>
+                </ul>
+                <div>
+              <span th:if="${user}">
+                <div class="username" th:if="${user}" id="user">
+                   <a href="http://localhost:8080/user/profile" class="nametext">[[${user.name}]]</a>
+                </div>
+              </span>
+                    <span th:unless="${user}">
+                <a href="http://localhost:8080/signin" class="reg-button">SIGN IN</a>
+              </span>
+                </div>
+            </nav>
+        </div>
+    </div>
+    <div class="center" >
+        <h2 class="signin-title">Sign Up</h2>
+        <div class="success-message" th:if="${successMessage}" id="successMessage">
+            <p th:text="${successMessage}"></p>
+        </div>
+        <form th:action="register" method="POST" name="Formfill" id="Formfill" onsubmit="return validateForm()">
+            <div class="text-field" >
+                <input required type="text"  name="name" id="name" >
+                <span ></span>
+                <label>Name</label>
+            </div>
+            <div class="text-field">
+                <input required  type="email"  id="email" name="email" oninput="checkEmailAvailability()">
+                <label>Email</label>
+                <span></span>
+            </div>
+            <div class="text-field">
+                <input required type="number"  name="number">
+                <label>Number</label>
+                <span></span>
+            </div>
+            <div class="text-field">
+                <input required type="password"  name="password" id="password">
+                <label>Password</label>
+                <span></span>
+            </div>
+            <div class="text-field">
+                <input required type="password"  name="confirm_password" id="confirm_password">
+                <label>Confirm Password</label>
+                <span></span>
+            </div>
+            <p id="error-message"></p>
+            <div class="button">
+                <input class="btn" type="submit" value="Submit" id="submitButton">
+            </div>
+            <div class="signup-link">
+                Already have an account? <a href="http://localhost:8080/signin">Sign In</a>
+            </div>
+        </form>
+        <h3 th:text="${name}"></h3>
+    </div>
+</div>
+<div class="help-container"></div>
+<script>
+    function validateForm(){
+            var password = document.getElementById("password").value;
+            var confirm_password = document.getElementById("confirm_password").value;
+            //var passwordRegex = /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@#$%^&!])[A-Za-z\d@#$%^&!]{6,}$/;
+            var hasUppercase = /[A-Z]/.test(password);
+            var hasLowercase = /[a-z]/.test(password);
+            var hasDigit = /\d/.test(password);
+            var hasSpecialChar = /[@#$%^&+=]/.test(password);
+
+            if(password == confirm_password){
+                if((hasUppercase || hasSpecialChar)){
+                    if(hasUppercase){
+                        if(hasSpecialChar){
+                            return true;
+                        }else{
+                            document.getElementById("error-message").innerHTML = "Password must contain 1 Symbol!";
+                            return false;
+                        }
+                    }else{
+                        document.getElementById("error-message").innerHTML = "Password must contain 1[A-Z]!";
+                        return false;
+                    }
+                }else{
+                    document.getElementById("error-message").innerHTML = "Passwords must contain 1[A-Z] & 1 Symbol!";
+                    return false;
+
+                }
+            }else{
+                document.getElementById("error-message").innerHTML = "Passwords don't match!";
+                return false;
+            }
+        }  
+
+
+</script>
+
+
+</body>
+</html>

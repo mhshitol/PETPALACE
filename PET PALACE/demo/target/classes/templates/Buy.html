@@ -1,0 +1,127 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+
+<head>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>TouristNest</title>
+    <link rel="stylesheet" th:href="@{/css/buy.css}" />
+    <script src="https://kit.fontawesome.com/e06ed31c2b.js" crossorigin="anonymous"></script>
+</head>
+
+<body>
+    <div class="bg-color">
+        <div class="nav-color">
+            <h2 class="logo">PET PALACE</h2>
+            <div class="header">
+                <nav>
+                    <ul class="nav-links">
+                        <li><a href="#"></a></li>
+                        <li><a href="http://localhost:8080/petpalace">Home</a></li>
+                        <li><a href="http://localhost:8080/petpalace">Cat</a></li>
+                        <li><a href="http://localhost:8080/cat">Dog</a></li>
+                        <li><a href="#">Other Animal</a></li>
+                        <!-- Modified this line -->
+                        <li><a href="#">Shelter and Rescue</a></li>
+                        <li><a href="#"></a></li>
+                        <li><a href="#"></a></li>
+                    </ul>
+                    <a href="http://localhost:8080/signup" class="reg-button">Sign up</a>
+                </nav>
+            </div>
+        </div>
+
+        <div class="image-cont1">
+            <img class="image1" src="/image/dog1.jpg" />
+        </div>
+
+
+        <div class="center">
+            <h2 class="signin-title">PET PALACE</h2>
+
+            <form th:action="@{/SpittelmarktBerlin}" method="POST">
+                <h3 class="booknow">Apply to Adopt</h3>
+
+                <div class="success-message" th:if="${successMessage}" id="successMessage">
+                    <p th:text="${successMessage}"></p>
+                </div>
+
+                <label for="email">Name:</label>
+                <input type="email" id="email" name="email" placeholder="Enter your full name" required />
+
+                <label for="email">Email:</label>
+                <input type="email" id="email" name="email" placeholder="Enter your registered email" required />
+
+                <label for="email">Address:</label>
+                <input type="email" id="email" name="email" placeholder="Enter your address" required />
+
+
+                <label for="Telephone">Telephone:</label>
+                <input type="number" id="Telephone" name="numberOfPersons" min="0" value="+880"
+                    oninput="calculateAmount()" required />
+
+
+                <label for="email">Details of other pets in household:</label>
+                <input type="email" id="email" name="email" placeholder="" required />
+
+
+                <label for="email">Are other pets neutered?:</label>
+                <input type="email" id="email" name="email" placeholder="" required />
+
+
+
+                <div>
+                    <label for="paymentMethod">--------USE FOR ONLINE PAYMENT--------</label>
+                    <label for="paymentMethod">Select Payment Method:</label>
+                    <select class="paymentmethod" id="paymentMethod" name="paymentMethod" required>
+                        <option value=""></option>
+                        <option value="VISA">VISA</option>
+                        <option value="MASTER">MASTER</option>
+                        <option value="AMERICANEXPRESS">AMERICAN EXPRESS</option>
+                        <option value="PAYPAL">PAYPAL</option>
+                    </select>
+                </div>
+                <label for="payableAmount">Enter card Number</label>
+                <input type="number" placeholder="Enter Your 16 Digit Card Number" id="cardNumber" name="cardNumber"
+                    required />
+
+                <label for="payableAmount">Enter CVV Number</label>
+                <input type="number" placeholder="Enter CVV Number" id="cvvNumber" name="cvvNumber" required />
+
+                <label for="payableAmount">Enter PIN Number</label>
+                <input type="number" placeholder="Enter PIN Number" id="pin" name="pin" required />
+
+
+                <input th:if="${user}" type="hidden" id="userEmail" name="userEmail" th:value="${user.email}" />
+                <div class="button">
+                    <input th:if="${user}" type="submit" value="Confirm" />
+                    <input th:unless="${user}" type="submit" value="Confirm" />
+                </div>
+
+            </form>
+
+
+        </div>
+    </div>
+
+    <script>
+
+
+        function calculateAmount() { 
+        var numberOfPersons = parseInt(document.getElementById("numberOfPersons").value, 10); 
+        var numberOfDays = getNumberOfDays(); 
+        var payableAmount = numberOfPersons * 80 * numberOfDays; 
+        document.getElementById("payableAmount").value = payableAmount;
+     }
+
+        function getNumberOfDays() {
+            var checkinDate = new Date(document.getElementById("checkIN").value);
+            var checkoutDate = new Date(document.getElementById("checkOUT").value);
+            var timeDifference = checkoutDate.getTime() - checkinDate.getTime();
+            var daysDifference = timeDifference / (1000 * 3600 * 24);
+            return daysDifference;
+        }
+    </script>
+
+</body>
+
+</html>
